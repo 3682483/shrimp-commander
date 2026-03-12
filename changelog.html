@@ -87,8 +87,57 @@
             <div class="version-card">
                 <div class="version-header">
                     <div class="version-number">
-                        v2.0.1
+                        v2026.3.11
                         <span class="version-badge badge-latest">最新</span>
+                    </div>
+                    <div class="version-date">2026-03-12</div>
+                </div>
+                <div class="version-body">
+                    <div class="change-category">
+                        <div class="change-title">🔒 安全更新</div>
+                        <ul class="change-list fix">
+                            <li>Gateway/WebSocket: 修复跨站 WebSocket 劫持漏洞 (GHSA-5wcw-8jjv-m286)</li>
+                            <li>强化 SecretRef 安全验证</li>
+                            <li>修复 TAR 提取 symlink 逃逸漏洞</li>
+                        </ul>
+                    </div>
+                    <div class="change-category">
+                        <div class="change-title">✨ 新功能</div>
+                        <ul class="change-list feature">
+                            <li>OpenRouter: 新增 Hunter Alpha 和 Healer Alpha 模型支持</li>
+                            <li>iOS: 全新欢迎界面和工具栏设计</li>
+                            <li>macOS: 新增 Chat 模型选择器</li>
+                            <li>Ollama: 一流本地/云端混合设置</li>
+                            <li>Memory: 可选的多模态图片音频索引</li>
+                            <li>ACP: 支持恢复现有会话 (resumeSessionId)</li>
+                        </ul>
+                    </div>
+                    <div class="change-category">
+                        <div class="change-title">🐛 Bug 修复</div>
+                        <ul class="change-list fix">
+                            <li>修复 GLM-5 和 DeepSeek 控制标记泄露</li>
+                            <li>修复 Discord/Telegram 长消息分块问题</li>
+                            <li>修复飞书本地图片自动转换</li>
+                            <li>修复 Kimi Coding 工具调用格式</li>
+                            <li>优化网关认证和会话重置</li>
+                            <li>修复 LaunchAgent 权限问题</li>
+                        </ul>
+                    </div>
+                    <div class="change-category">
+                        <div class="change-title">⚡ 性能优化</div>
+                        <ul class="change-list improve">
+                            <li>改进错误恢复和故障转移机制</li>
+                            <li>优化上下文修剪和内存管理</li>
+                            <li>增强日志观察性</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="version-card">
+                <div class="version-header">
+                    <div class="version-number">
+                        v2.0.1
                     </div>
                     <div class="version-date">2026-03-12</div>
                 </div>
