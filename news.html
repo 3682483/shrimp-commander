@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻动态 | 虾指挥</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #0a2e38;
+            --accent: #ff6b6b;
+            --accent-green: #00ff88;
+            --accent-purple: #a855f7;
+            --accent-orange: #ff9500;
+            --accent-yellow: #fbbf24;
+            --dark: #020810;
+            --light: #e8f4f8;
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%);
+            --gradient-2: linear-gradient(180deg, #0a2e38 0%, #020810 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', 'Rajdhani', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .ocean-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--gradient-2);
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 200px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2300f0ff" fill-opacity="0.1" d="M0,160L48,176C96,192,192,224,288,218.7C384,213,480,171,576,165.3C672,160,768,192,864,208C960,224,1056,224,1152,197.3C1248,171,1344,117,1392,90.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x;
+            animation: wave 15s linear infinite;
+        }
+
+        .wave:nth-child(2) { bottom: 10px; opacity: 0.5; animation-delay: -5s; animation-duration: 20s; }
+        .wave:nth-child(3) { bottom: 20px; opacity: 0.3; animation-delay: -10s; animation-duration: 25s; }
+
+        @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(2, 8, 16, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon { font-size: 2.5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--light); text-decoration: none; transition: all 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 2rem;
+        }
+
+        .hero-content { max-width: 900px; animation: fadeInUp 1s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(10, 46, 56, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            color: var(--light);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gradient-1);
+            color: var(--dark);
+            border-color: transparent;
+        }
+
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .news-card {
+            background: rgba(10, 46, 56, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            display: flex;
+            gap: 0;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.2);
+        }
+
+        .news-date-box {
+            min-width: 100px;
+            padding: 1.5rem;
+            background: rgba(0, 240, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .news-day {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .news-month {
+            font-size: 0.9rem;
+            color: rgba(232, 244, 248, 0.7);
+        }
+
+        .news-year {
+            font-size: 0.8rem;
+            color: rgba(232, 244, 248, 0.5);
+        }
+
+        .news-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .news-tag {
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-release { background: rgba(0, 255, 136, 0.2); color: var(--accent-green); }
+        .tag-feature { background: rgba(0, 240, 255, 0.2); color: var(--primary); }
+        .tag-community { background: rgba(168, 85, 247, 0.2); color: var(--accent-purple); }
+        .tag-security { background: rgba(255, 107, 107, 0.2); color: var(--accent); }
+        .tag-tutorial { background: rgba(255, 187, 36, 0.2); color: var(--accent-yellow); }
+
+        .news-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 0.8rem;
+        }
+
+        .news-summary {
+            font-size: 0.95rem;
+            color: rgba(232, 244, 248, 0.8);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .news-link {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .news-link:hover { color: var(--light); }
+
+        .featured-news {
+            background: rgba(10, 46, 56, 0.5);
+            border: 2px solid var(--primary);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 1rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .featured-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .featured-content p {
+            font-size: 1.1rem;
+            color: rgba(232, 244, 248, 0.9);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .newsletter {
+            background: rgba(10, 46, 56, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter p {
+            color: rgba(232, 244, 248, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 25px;
+            color: var(--light);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--primary);
+        }
+
+        footer {
+            background: rgba(2, 8, 16, 0.9);
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
+        .footer-links a { color: var(--primary); text-decoration: none; }
+        .copyright { color: rgba(232, 244, 248, 0.5); font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .news-card { flex-direction: column; }
+            .news-date-box { flex-direction: row; gap: 0.5rem; border-right: none; border-bottom: 1px solid rgba(0, 240, 255, 0.2); }
+            .nav-links { display: none; }
+            .newsletter-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ocean-bg">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🦞</span>
+                <span>虾指挥</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="news.html">新闻动态</a></li>
+                <li><a href="tutorials.html">入门教程</a></li>
+                <li><a href="links.html">资源导航</a></li>
+                <li><a href="skills.html">Skill精品库</a></li>
+                <li><a href="cases.html">最佳实践</a></li>
+                <li><a href="faq.html">常见问题</a></li>
+                <li><a href="https://github.com/3682483/shrimp-commander">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>新闻动态</h1>
+            <p class="subtitle">OPENCLAW NEWS & UPDATES</p>
+        </div>
+    </section>
+
+    <main class="content-section">
+        <!-- 置顶新闻 -->
+        <div class="featured-news">
+            <span class="featured-badge">🔥 置顶</span>
+            <div class="featured-content">
+                <h2>OpenClaw 2.0 正式发布！全新架构升级</h2>
+                <p>经过 6 个月的开发，OpenClaw 2.0 终于和大家见面了！新版本带来全新的插件架构、性能提升 3 倍、内存占用降低 50%。支持多模型路由、增强的安全审计、以及全新的 Web Dashboard。</p>
+                <div class="featured-actions">
+                    <a href="#" class="btn btn-primary">查看发布公告</a>
+                    <a href="https://github.com/openclaw/openclaw/releases" class="btn btn-secondary">下载 v2.0</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 筛选栏 -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="release">版本发布</button>
+            <button class="filter-btn" data-filter="feature">新功能</button>
+            <button class="filter-btn" data-filter="community">社区动态</button>
+            <button class="filter-btn" data-filter="security">安全更新</button>
+            <button class="filter-btn" data-filter="tutorial">教程活动</button>
+        </div>
+
+        <!-- 新闻列表 -->
+        <div class="news-list">
+            <article class="news-card" data-category="release">
+                <div class="news-date-box">
+                    <span class="news-day">12</span>
+                    <span class="news-month">3月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-release">版本发布</span>
+                    </div>
+                    <h3 class="news-title">OpenClaw v2.0.1 补丁发布</h3>
+                    <p class="news-summary">修复了 2.0 版本中已知的 3 个问题：内存泄漏修复、Webhook 超时处理、Skill 加载顺序问题。建议所有 2.0 用户尽快升级。</p>
+                    <a href="#" class="news-link">阅读全文 →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="community">
+                <div class="news-date-box">
+                    <span class="news-day">10</span>
+                    <span class="news-month">3月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-community">社区动态</span>
+                    </div>
+                    <h3 class="news-title">ClawHub 技能市场突破 1000 个技能</h3>
+                    <p class="news-summary">ClawHub 技能市场迎来里程碑时刻！社区贡献者已发布超过 1000 个技能包，涵盖 AI、自动化、数据分析等多个领域。感谢每一位贡献者！</p>
+                    <a href="https://clawhub.com" class="news-link">访问 ClawHub →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="feature">
+                <div class="news-date-box">
+                    <span class="news-day">08</span>
+                    <span class="news-month">3月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-feature">新功能</span>
+                    </div>
+                    <h3 class="news-title">支持 Claude 3.5 Sonnet 和 GPT-4o</h3>
+                    <p class="news-summary">OpenClaw 现已支持最新一代 AI 模型！Claude 3.5 Sonnet 和 GPT-4o 已加入多模型路由器，可通过配置一键切换。</p>
+                    <a href="#" class="news-link">配置指南 →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="security">
+                <div class="news-date-box">
+                    <span class="news-day">05</span>
+                    <span class="news-month">3月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-security">安全更新</span>
+                    </div>
+                    <h3 class="news-title">安全公告：CVE-2026-XXXXX</h3>
+                    <p class="news-summary">发现并修复了一个潜在的安全漏洞，可能影响 Skill 权限隔离。请所有用户尽快升级到 v1.9.8 或更高版本。详细技术分析请查看安全公告。</p>
+                    <a href="#" class="news-link">查看详情 →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="tutorial">
+                <div class="news-date-box">
+                    <span class="news-day">01</span>
+                    <span class="news-month">3月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-tutorial">教程活动</span>
+                    </div>
+                    <h3 class="news-title">3 月线上直播：从零开始构建 AI Agent</h3>
+                    <p class="news-summary">3 月 15 日晚 8 点，我们将举办线上直播，手把手教你用 OpenClaw 构建第一个 AI Agent。名额有限，立即报名！</p>
+                    <a href="#" class="news-link">立即报名 →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="release">
+                <div class="news-date-box">
+                    <span class="news-day">28</span>
+                    <span class="news-month">2月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-release">版本发布</span>
+                    </div>
+                    <h3 class="news-title">OpenClaw v1.9.8 LTS 长期支持版发布</h3>
+                    <p class="news-summary">为无法立即升级到 2.0 的用户，我们发布了 1.9.8 LTS 版本，将提供 18 个月的安全更新支持。包含重要的安全修复和性能优化。</p>
+                    <a href="#" class="news-link">下载 LTS 版本 →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="community">
+                <div class="news-date-box">
+                    <span class="news-day">25</span>
+                    <span class="news-month">2月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-community">社区动态</span>
+                    </div>
+                    <h3 class="news-title">Discord 社区突破 10000 成员</h3>
+                    <p class="news-summary">OpenClaw Discord 服务器成员数突破 10000！感谢社区的支持，我们将继续为大家提供更好的交流平台和技术支持。</p>
+                    <a href="https://discord.com/invite/clawd" class="news-link">加入 Discord →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="feature">
+                <div class="news-date-box">
+                    <span class="news-day">20</span>
+                    <span class="news-month">2月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-feature">新功能</span>
+                    </div>
+                    <h3 class="news-title">Web Dashboard 2.0 上线</h3>
+                    <p class="news-summary">全新设计的 Web 管理界面上线！支持实时监控、日志查看、Skill 管理、配置编辑等功能。提供更直观的可视化操作体验。</p>
+                    <a href="#" class="news-link">查看文档 →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="tutorial">
+                <div class="news-date-box">
+                    <span class="news-day">15</span>
+                    <span class="news-month">2月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-tutorial">教程活动</span>
+                    </div>
+                    <h3 class="news-title">官方教程文档全面更新</h3>
+                    <p class="news-summary">文档站点 docs.openclaw.ai 全面改版！新增快速开始指南、API 参考、最佳实践等章节，配有多语言支持和交互式示例。</p>
+                    <a href="https://docs.openclaw.ai" class="news-link">访问文档 →</a>
+                </div>
+            </article>
+
+            <article class="news-card" data-category="community">
+                <div class="news-date-box">
+                    <span class="news-day">10</span>
+                    <span class="news-month">2月</span>
+                    <span class="news-year">2026</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-tag tag-community">社区动态</span>
+                    </div>
+                    <h3 class="news-title">1 月社区贡献者榜单公布</h3>
+                    <p class="news-summary">恭喜 @developer_a、@skill_master、@doc_writer 获得 1 月 Top Contributor 称号！感谢他们为社区做出的杰出贡献。</p>
+                    <a href="#" class="news-link">查看榜单 →</a>
+                </div>
+            </article>
+        </div>
+
+        <!-- 订阅 -->
+        <div class="newsletter">
+            <h3>📬 订阅 OpenClaw 动态</h3>
+            <p>第一时间获取版本更新、安全公告、社区活动通知</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="输入你的邮箱">
+                <button type="submit" class="btn btn-primary">订阅</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">🦞 虾指挥</div>
+        <div class="footer-links">
+            <a href="index.html">首页</a>
+            <a href="links.html">资源导航</a>
+            <a href="skills.html">Skill精品库</a>
+            <a href="cases.html">最佳实践</a>
+            <a href="https://github.com/3682483/shrimp-commander">GitHub</a>
+        </div>
+        <p class="copyright">© 2026 虾指挥 · Created by 陈一周 & 鑫鑫 🦞 · Powered by OpenClaw</p>
+    </footer>
+
+    <script>
+        // 筛选功能
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                document.querySelectorAll('.news-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 滚动动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.news-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.5s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

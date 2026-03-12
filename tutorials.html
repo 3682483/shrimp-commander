@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入门教程 | 虾指挥</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #0a2e38;
+            --accent: #ff6b6b;
+            --accent-green: #00ff88;
+            --accent-purple: #a855f7;
+            --accent-orange: #ff9500;
+            --accent-yellow: #fbbf24;
+            --dark: #020810;
+            --light: #e8f4f8;
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%);
+            --gradient-2: linear-gradient(180deg, #0a2e38 0%, #020810 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', 'Rajdhani', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .ocean-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--gradient-2);
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 200px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2300f0ff" fill-opacity="0.1" d="M0,160L48,176C96,192,192,224,288,218.7C384,213,480,171,576,165.3C672,160,768,192,864,208C960,224,1056,224,1152,197.3C1248,171,1344,117,1392,90.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x;
+            animation: wave 15s linear infinite;
+        }
+
+        .wave:nth-child(2) { bottom: 10px; opacity: 0.5; animation-delay: -5s; animation-duration: 20s; }
+        .wave:nth-child(3) { bottom: 20px; opacity: 0.3; animation-delay: -10s; animation-duration: 25s; }
+
+        @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(2, 8, 16, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon { font-size: 2.5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--light); text-decoration: none; transition: all 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 2rem;
+        }
+
+        .hero-content { max-width: 900px; animation: fadeInUp 1s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: rgba(232, 244, 248, 0.8);
+            line-height: 1.8;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .learning-path {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .path-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(10, 46, 56, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 25px;
+            font-size: 0.95rem;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .path-step:hover, .path-step.active {
+            background: var(--gradient-1);
+            color: var(--dark);
+            border-color: transparent;
+        }
+
+        .path-step .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 240, 255, 0.2);
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .path-step.active .step-num {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .tutorial-card {
+            background: rgba(10, 46, 56, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .tutorial-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.2);
+        }
+
+        .tutorial-header {
+            padding: 1.5rem;
+            background: rgba(0, 240, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tutorial-icon {
+            font-size: 2.5rem;
+        }
+
+        .tutorial-level {
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .level-beginner { background: rgba(0, 255, 136, 0.2); color: var(--accent-green); }
+        .level-intermediate { background: rgba(255, 187, 36, 0.2); color: var(--accent-yellow); }
+        .level-advanced { background: rgba(255, 107, 107, 0.2); color: var(--accent); }
+
+        .tutorial-body {
+            padding: 1.5rem;
+        }
+
+        .tutorial-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        .tutorial-desc {
+            font-size: 0.9rem;
+            color: rgba(232, 244, 248, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .tutorial-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: rgba(232, 244, 248, 0.5);
+        }
+
+        .tutorial-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .section-header {
+            margin: 3rem 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon { font-size: 2rem; }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quick-start {
+            background: rgba(10, 46, 56, 0.5);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .quick-start h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-green);
+        }
+
+        .code-block .comment { color: rgba(232, 244, 248, 0.5); }
+        .code-block .command { color: var(--primary); }
+
+        .video-tutorials {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .video-card {
+            background: rgba(10, 46, 56, 0.3);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .video-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, #0a2e38 0%, #020810 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
+        }
+
+        .video-info {
+            padding: 1rem;
+        }
+
+        .video-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 0.3rem;
+        }
+
+        .video-views {
+            font-size: 0.8rem;
+            color: rgba(232, 244, 248, 0.5);
+        }
+
+        footer {
+            background: rgba(2, 8, 16, 0.9);
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
+        .footer-links a { color: var(--primary); text-decoration: none; }
+        .copyright { color: rgba(232, 244, 248, 0.5); font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .tutorials-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .learning-path { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ocean-bg">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🦞</span>
+                <span>虾指挥</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="news.html">新闻动态</a></li>
+                <li><a href="tutorials.html">入门教程</a></li>
+                <li><a href="links.html">资源导航</a></li>
+                <li><a href="skills.html">Skill精品库</a></li>
+                <li><a href="cases.html">最佳实践</a></li>
+                <li><a href="faq.html">常见问题</a></li>
+                <li><a href="https://github.com/3682483/shrimp-commander">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>入门教程</h1>
+            <p class="subtitle">OPENCLAW TUTORIALS</p>
+            <p class="description">从零开始，一步步掌握 OpenClaw<br>快速入门 → 进阶技能 → 实战项目</p>
+        </div>
+    </section>
+
+    <main class="content-section">
+        <!-- 学习路径 -->
+        <div class="learning-path">
+            <div class="path-step active">
+                <span class="step-num">1</span>
+                <span>快速开始</span>
+            </div>
+            <div class="path-step">
+                <span class="step-num">2</span>
+                <span>核心概念</span>
+            </div>
+            <div class="path-step">
+                <span class="step-num">3</span>
+                <span>技能开发</span>
+            </div>
+            <div class="path-step">
+                <span class="step-num">4</span>
+                <span>进阶实践</span>
+            </div>
+            <div class="path-step">
+                <span class="step-num">5</span>
+                <span>部署上线</span>
+            </div>
+        </div>
+
+        <!-- 快速开始 -->
+        <div class="quick-start">
+            <h3>⚡ 5 分钟快速开始</h3>
+            <div class="code-block">
+                <code>
+<span class="comment"># 安装 OpenClaw CLI</span>
+<span class="command">npm install -g openclaw</span>
+
+<span class="comment"># 创建新项目</span>
+<span class="command">openclaw init my-agent</span>
+
+<span class="comment"># 进入项目目录</span>
+<span class="command">cd my-agent</span>
+
+<span class="comment"># 启动 Agent</span>
+<span class="command">openclaw start</span>
+                </code>
+            </div>
+            <p style="color: rgba(232,244,248,0.7); font-size: 0.95rem;">
+                🎉 就这么简单！你的第一个 AI Agent 已经运行起来了。访问 <a href="http://localhost:3000" style="color: var(--primary);">http://localhost:3000</a> 查看 Web 界面。
+            </p>
+        </div>
+
+        <!-- 入门教程 -->
+        <div class="section-header">
+            <span class="section-icon">📚</span>
+            <h2 class="section-title">入门教程</h2>
+        </div>
+
+        <div class="tutorials-grid">
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🚀</span>
+                    <span class="tutorial-level level-beginner">入门</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">OpenClaw 简介与安装</h3>
+                    <p class="tutorial-desc">了解 OpenClaw 是什么、能做什么，以及如何在你的系统上安装配置。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 10 分钟</span>
+                        <span>👁️ 5.2K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">💬</span>
+                    <span class="tutorial-level level-beginner">入门</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">第一次对话</h3>
+                    <p class="tutorial-desc">学习如何与 OpenClaw Agent 进行对话，了解基本交互方式和常用命令。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 15 分钟</span>
+                        <span>👁️ 4.8K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🧠</span>
+                    <span class="tutorial-level level-beginner">入门</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">理解核心概念</h3>
+                    <p class="tutorial-desc">深入理解 Agent、Skill、Memory、Tool 等核心概念，为进阶学习打基础。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 20 分钟</span>
+                        <span>👁️ 3.5K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🔧</span>
+                    <span class="tutorial-level level-beginner">入门</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">配置与个性化</h3>
+                    <p class="tutorial-desc">学习如何配置 OpenClaw，包括模型选择、个性设定、环境变量等。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 15 分钟</span>
+                        <span>👁️ 2.8K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🧩</span>
+                    <span class="tutorial-level level-beginner">入门</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">安装第一个 Skill</h3>
+                    <p class="tutorial-desc">从 ClawHub 技能市场安装第一个技能包，扩展你的 Agent 能力。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 10 分钟</span>
+                        <span>👁️ 4.1K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">💾</span>
+                    <span class="tutorial-level level-beginner">入门</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">记忆系统入门</h3>
+                    <p class="tutorial-desc">了解 OpenClaw 的记忆系统，让你的 Agent 拥有持久记忆能力。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 15 分钟</span>
+                        <span>👁️ 3.2K 阅读</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- 进阶教程 -->
+        <div class="section-header">
+            <span class="section-icon">🎯</span>
+            <h2 class="section-title">进阶教程</h2>
+        </div>
+
+        <div class="tutorials-grid">
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">📝</span>
+                    <span class="tutorial-level level-intermediate">进阶</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">创建自定义 Skill</h3>
+                    <p class="tutorial-desc">从零开始创建一个完整的 Skill，包含 SKILL.md、脚本、配置文件。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 30 分钟</span>
+                        <span>👁️ 2.5K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🔌</span>
+                    <span class="tutorial-level level-intermediate">进阶</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">Tool 开发指南</h3>
+                    <p class="tutorial-desc">学习如何开发自定义 Tool，扩展 Agent 与外部系统交互的能力。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 45 分钟</span>
+                        <span>👁️ 1.8K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🔄</span>
+                    <span class="tutorial-level level-intermediate">进阶</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">多模型路由</h3>
+                    <p class="tutorial-desc">配置和使用多模型路由器，智能选择 Claude、GPT、Gemini 等模型。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 25 分钟</span>
+                        <span>👁️ 2.1K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🔗</span>
+                    <span class="tutorial-level level-intermediate">进阶</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">集成第三方服务</h3>
+                    <p class="tutorial-desc">将 OpenClaw 与飞书、钉钉、Slack、GitHub 等服务集成。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 35 分钟</span>
+                        <span>👁️ 2.3K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">⚡</span>
+                    <span class="tutorial-level level-intermediate">进阶</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">自动化工作流</h3>
+                    <p class="tutorial-desc">使用定时任务、Webhook、事件触发构建自动化工作流。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 40 分钟</span>
+                        <span>👁️ 1.9K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🔐</span>
+                    <span class="tutorial-level level-intermediate">进阶</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">安全最佳实践</h3>
+                    <p class="tutorial-desc">了解 OpenClaw 安全机制，学会保护敏感数据和凭证。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 20 分钟</span>
+                        <span>👁️ 1.5K 阅读</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- 高级教程 -->
+        <div class="section-header">
+            <span class="section-icon">🚀</span>
+            <h2 class="section-title">高级教程</h2>
+        </div>
+
+        <div class="tutorials-grid">
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🤖</span>
+                    <span class="tutorial-level level-advanced">高级</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">多 Agent 协作</h3>
+                    <p class="tutorial-desc">构建多个 Agent 协作的复杂系统，实现任务分发和结果汇总。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 60 分钟</span>
+                        <span>👁️ 1.2K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🐳</span>
+                    <span class="tutorial-level level-advanced">高级</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">Docker 部署</h3>
+                    <p class="tutorial-desc">使用 Docker 和 Docker Compose 部署 OpenClaw 生产环境。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 45 分钟</span>
+                        <span>👁️ 1.8K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">☁️</span>
+                    <span class="tutorial-level level-advanced">高级</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">云服务部署</h3>
+                    <p class="tutorial-desc">将 OpenClaw 部署到 AWS、GCP、Azure 或国内云服务商。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 50 分钟</span>
+                        <span>👁️ 1.4K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">📊</span>
+                    <span class="tutorial-level level-advanced">高级</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">性能调优</h3>
+                    <p class="tutorial-desc">分析和优化 OpenClaw 性能，提升响应速度和降低资源占用。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 40 分钟</span>
+                        <span>👁️ 0.9K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🔧</span>
+                    <span class="tutorial-level level-advanced">高级</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">源码解析</h3>
+                    <p class="tutorial-desc">深入 OpenClaw 源码，理解架构设计和核心模块实现。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 90 分钟</span>
+                        <span>👁️ 0.7K 阅读</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="tutorial-card">
+                <div class="tutorial-header">
+                    <span class="tutorial-icon">🤝</span>
+                    <span class="tutorial-level level-advanced">高级</span>
+                </div>
+                <div class="tutorial-body">
+                    <h3 class="tutorial-title">参与开源贡献</h3>
+                    <p class="tutorial-desc">学习如何向 OpenClaw 项目提交 PR、报告 Issue、参与社区讨论。</p>
+                    <div class="tutorial-meta">
+                        <span>⏱️ 30 分钟</span>
+                        <span>👁️ 0.6K 阅读</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- 视频教程 -->
+        <div class="section-header">
+            <span class="section-icon">🎬</span>
+            <h2 class="section-title">视频教程</h2>
+        </div>
+
+        <div class="video-tutorials">
+            <a href="#" class="video-card">
+                <div class="video-thumbnail">
+                    🎥
+                    <span class="video-duration">15:32</span>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">OpenClaw 快速入门教程</div>
+                    <div class="video-views">12.5K 次观看</div>
+                </div>
+            </a>
+
+            <a href="#" class="video-card">
+                <div class="video-thumbnail">
+                    🎥
+                    <span class="video-duration">28:45</span>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">从零创建你的第一个 Skill</div>
+                    <div class="video-views">8.3K 次观看</div>
+                </div>
+            </a>
+
+            <a href="#" class="video-card">
+                <div class="video-thumbnail">
+                    🎥
+                    <span class="video-duration">42:18</span>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">OpenClaw 实战：自动化日报生成</div>
+                    <div class="video-views">6.1K 次观看</div>
+                </div>
+            </a>
+
+            <a href="#" class="video-card">
+                <div class="video-thumbnail">
+                    🎥
+                    <span class="video-duration">35:20</span>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">飞书集成完整教程</div>
+                    <div class="video-views">5.7K 次观看</div>
+                </div>
+            </a>
+
+            <a href="#" class="video-card">
+                <div class="video-thumbnail">
+                    🎥
+                    <span class="video-duration">55:00</span>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">多 Agent 协作系统搭建</div>
+                    <div class="video-views">4.2K 次观看</div>
+                </div>
+            </a>
+
+            <a href="#" class="video-card">
+                <div class="video-thumbnail">
+                    🎥
+                    <span class="video-duration">1:15:00</span>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">OpenClaw 架构深度解析</div>
+                    <div class="video-views">3.8K 次观看</div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">🦞 虾指挥</div>
+        <div class="footer-links">
+            <a href="index.html">首页</a>
+            <a href="links.html">资源导航</a>
+            <a href="skills.html">Skill精品库</a>
+            <a href="cases.html">最佳实践</a>
+            <a href="https://github.com/3682483/shrimp-commander">GitHub</a>
+        </div>
+        <p class="copyright">© 2026 虾指挥 · Created by 陈一周 & 鑫鑫 🦞 · Powered by OpenClaw</p>
+    </footer>
+
+    <script>
+        // 学习路径点击
+        document.querySelectorAll('.path-step').forEach(step => {
+            step.addEventListener('click', function() {
+                document.querySelectorAll('.path-step').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 滚动动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.tutorial-card, .video-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.5s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
