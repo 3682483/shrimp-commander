@@ -3,912 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>虾指挥 | OpenClaw 技能图谱与学习路线</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>虾指挥 - OpenClaw 资讯导航</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #00f0ff;
-            --secondary: #0a2e38;
-            --accent: #ff6b6b;
-            --dark: #020810;
-            --light: #e8f4f8;
-            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%);
-            --gradient-2: linear-gradient(180deg, #0a2e38 0%, #020810 100%);
-        }
+        :root { --primary: #00f0ff; --secondary: #0a2e38; --accent: #ff6b6b; --accent-green: #00ff88; --accent-purple: #a855f7; --accent-yellow: #fbbf24; --accent-pink: #ec4899; --dark: #020810; --light: #e8f4f8; --gradient-1: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', sans-serif; background: var(--dark); color: var(--light); min-height: 100vh; }
+        .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #0a2e38 0%, #020810 100%); z-index: -1; overflow: hidden; }
+        .wave { position: absolute; bottom: 0; width: 200%; height: 200px; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2300f0ff" fill-opacity="0.1" d="M0,160L48,176C96,192,192,224,288,218.7C384,213,480,171,576,165.3C672,160,768,192,864,208C960,224,1056,224,1152,197.3C1248,171,1344,117,1392,90.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x; animation: wave 15s linear infinite; }
+        .wave:nth-child(2) { bottom: 10px; opacity: 0.5; animation-delay: -5s; animation-duration: 20s; }
+        .wave:nth-child(3) { bottom: 20px; opacity: 0.3; animation-delay: -10s; animation-duration: 25s; }
+        @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* 顶部导航 */
+        nav { position: fixed; top: 0; width: 100%; background: rgba(2,8,16,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,240,255,0.2); z-index: 1000; padding: 1rem 2rem; }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon { font-size: 2.5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--light); text-decoration: none; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: rgba(0,240,255,0.2); color: var(--primary); }
 
-        body {
-            font-family: 'Noto Sans SC', 'Rajdhani', sans-serif;
-            background: var(--dark);
-            color: var(--light);
-            overflow-x: hidden;
-        }
+        /* Hero */
+        .hero { min-height: 40vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 3rem; }
+        .hero-content { max-width: 800px; }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 4rem; font-weight: 900; background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; animation: fadeInUp 1s ease-out; }
+        .hero .subtitle { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--primary); letter-spacing: 3px; margin-bottom: 1rem; }
+        .hero .desc { font-size: 1.1rem; color: rgba(232,244,248,0.8); line-height: 1.8; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 动态背景 */
-        .ocean-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-2);
-            z-index: -1;
-            overflow: hidden;
-        }
+        /* 统计 */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto 3rem; padding: 0 2rem; }
+        .stat { background: rgba(10,46,56,0.3); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 1.5rem; text-align: center; transition: all 0.3s; }
+        .stat:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .stat-num { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 900; color: var(--primary); }
+        .stat-label { color: rgba(232,244,248,0.7); font-size: 0.9rem; margin-top: 0.3rem; }
 
-        .wave {
-            position: absolute;
-            bottom: 0;
-            width: 200%;
-            height: 200px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2300f0ff" fill-opacity="0.1" d="M0,160L48,176C96,192,192,224,288,218.7C384,213,480,171,576,165.3C672,160,768,192,864,208C960,224,1056,224,1152,197.3C1248,171,1344,117,1392,90.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x;
-            animation: wave 15s linear infinite;
-        }
+        /* 栏目分类 */
+        .content { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .category { margin-bottom: 3rem; }
+        .category-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .category-icon { font-size: 2rem; }
+        .category-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
+        .category-count { background: rgba(0,240,255,0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; color: var(--primary); }
 
-        .wave:nth-child(2) {
-            bottom: 10px;
-            opacity: 0.5;
-            animation-delay: -5s;
-            animation-duration: 20s;
-        }
+        /* 卡片网格 */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card { background: rgba(10,46,56,0.3); border: 1px solid rgba(0,240,255,0.2); border-radius: 20px; padding: 1.5rem; text-decoration: none; transition: all 0.3s; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,240,255,0.2); }
+        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .card-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--light); margin-bottom: 0.5rem; }
+        .card-desc { color: rgba(232,244,248,0.7); font-size: 0.9rem; line-height: 1.6; flex: 1; }
+        .card-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,240,255,0.1); }
+        .card-tag { padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.75rem; font-weight: 600; }
+        .tag-hot { background: rgba(255,107,107,0.2); color: var(--accent); }
+        .tag-new { background: rgba(0,255,136,0.2); color: var(--accent-green); }
+        .tag-essential { background: rgba(255,187,36,0.2); color: var(--accent-yellow); }
+        .card-arrow { color: var(--primary); font-size: 1.2rem; opacity: 0; transition: all 0.3s; }
+        .card:hover .card-arrow { opacity: 1; transform: translateX(5px); }
 
-        .wave:nth-child(3) {
-            bottom: 20px;
-            opacity: 0.3;
-            animation-delay: -10s;
-            animation-duration: 25s;
-        }
-
-        @keyframes wave {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* 导航栏 */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(2, 8, 16, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-            z-index: 1000;
-            padding: 1rem 2rem;
-        }
-
-        .nav-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            font-size: 2.5rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        /* Hero 区域 */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 50px rgba(0, 240, 255, 0.3);
-        }
-
-        .hero .subtitle {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 300;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-        }
-
-        .hero .description {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: rgba(232, 244, 248, 0.8);
-            margin-bottom: 3rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: var(--gradient-1);
-            color: var(--dark);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--dark);
-        }
-
-        /* 统计数据 */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 4rem auto 0;
-            padding: 0 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(10, 46, 56, 0.3);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
-        }
-
-        .stat-number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: rgba(232, 244, 248, 0.7);
-        }
-
-        /* 内容区域 */
-        .content-section {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: rgba(232, 244, 248, 0.7);
-        }
-
-        /* 技能卡片网格 */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-card {
-            background: rgba(10, 46, 56, 0.3);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .skill-card:hover::before {
-            left: 100%;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.3);
-        }
-
-        .skill-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .skill-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .skill-level {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: var(--gradient-1);
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        .skill-description {
-            color: rgba(232, 244, 248, 0.8);
-            line-height: 1.8;
-        }
-
-        /* 学习路线 */
-        .roadmap {
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .roadmap::before {
-            content: '';
-            position: absolute;
-            left: 1.5rem;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient-1);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
-        }
-
-        .roadmap-phase {
-            position: relative;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: rgba(10, 46, 56, 0.3);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 15px;
-            transition: all 0.3s;
-        }
-
-        .roadmap-phase::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem;
-            top: 2.5rem;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--primary);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 20px var(--primary);
-            }
-            50% {
-                transform: scale(1.2);
-                box-shadow: 0 0 30px var(--primary);
-            }
-        }
-
-        .roadmap-phase:hover {
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
-        }
-
-        .phase-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .phase-duration {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 107, 107, 0.2);
-            border: 1px solid var(--accent);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .phase-content {
-            color: rgba(232, 244, 248, 0.8);
-            line-height: 1.8;
-        }
-
-        /* 成长路径 */
-        .growth-path {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .growth-stage {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(10, 46, 56, 0.3);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 20px;
-            transition: all 0.3s;
-        }
-
-        .growth-stage:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-        }
-
-        .stage-icon {
-            font-size: 5rem;
-            margin-bottom: 1.5rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .stage-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .stage-level {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--gradient-1);
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        .stage-description {
-            color: rgba(232, 244, 248, 0.8);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
+        /* 快捷入口 */
+        .quick-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 3rem 0; padding: 0 2rem; }
+        .quick-btn { padding: 1rem 2rem; background: rgba(10,46,56,0.3); border: 1px solid rgba(0,240,255,0.2); border-radius: 30px; color: var(--light); text-decoration: none; font-weight: 600; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; }
+        .quick-btn:hover { background: var(--gradient-1); color: var(--dark); border-color: transparent; transform: translateY(-3px); }
 
         /* Footer */
-        footer {
-            background: rgba(2, 8, 16, 0.9);
-            border-top: 1px solid rgba(0, 240, 255, 0.2);
-            padding: 4rem 2rem 2rem;
-            text-align: center;
-        }
+        footer { background: rgba(2,8,16,0.9); border-top: 1px solid rgba(0,240,255,0.2); padding: 3rem 2rem 2rem; text-align: center; margin-top: 4rem; }
+        .footer-logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--primary); text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--light); }
+        .copyright { color: rgba(232,244,248,0.5); font-size: 0.85rem; }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .footer-text {
-            color: rgba(232, 244, 248, 0.6);
-            margin-bottom: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--light);
-        }
-
-        .copyright {
-            color: rgba(232, 244, 248, 0.5);
-            font-size: 0.9rem;
-        }
-
-        /* 响应式 */
-        @media (max-width: 1024px) {
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .growth-path {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.3rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .growth-path {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
+        @media (max-width: 1024px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .nav-links { display: none; } .stats { grid-template-columns: repeat(2, 1fr); } .card-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <!-- 动态背景 -->
-    <div class="ocean-bg">
+    <div class="bg">
         <div class="wave"></div>
         <div class="wave"></div>
         <div class="wave"></div>
     </div>
 
-    <!-- 导航栏 -->
     <nav>
         <div class="nav-content">
-            <div class="logo">
+            <a href="index.html" class="logo">
                 <span class="logo-icon">🦞</span>
                 <span>虾指挥</span>
-            </div>
+            </a>
             <ul class="nav-links">
-                <li><a href="#skills">技能图谱</a></li>
-                <li><a href="#roadmap">学习路线</a></li>
-                <li><a href="#growth">成长路径</a></li>
-                <li><a href="links.html">资源导航</a></li>
-                <li><a href="skills.html">Skill精品库</a></li>
-                <li><a href="cases.html">最佳实践</a></li>
-                <li><a href="https://github.com/3682483/shrimp-commander">GitHub</a></li>
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="tutorials.html">教程</a></li>
+                <li><a href="skills.html">技能</a></li>
+                <li><a href="cases.html">案例</a></li>
+                <li><a href="community.html">社区</a></li>
+                <li><a href="faq.html">FAQ</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero 区域 -->
     <section class="hero">
         <div class="hero-content">
-            <h1>虾指挥</h1>
-            <p class="subtitle">OPENCLAW 技能图谱与学习路线</p>
-            <p class="description">
-                专注于 OpenClaw AI 助手成长的训练平台<br>
-                通过系统化的技能图谱和学习路线，帮助每一只"虾"成长为强大的智能助手
-            </p>
-            <div class="cta-buttons">
-                <a href="#skills" class="btn btn-primary">开始学习</a>
-                <a href="https://github.com/3682483/shrimp-commander" class="btn btn-secondary">查看源码</a>
-            </div>
+            <h1>🦞 虾指挥</h1>
+            <p class="subtitle">OPENCLAW RESOURCE HUB</p>
+            <p class="desc">一站式 OpenClaw 资讯导航 · 教程 · 技能 · 案例 · 社区</p>
         </div>
     </section>
 
-    <!-- 统计数据 -->
-    <section class="stats">
-        <div class="stat-item">
-            <div class="stat-number">8+</div>
-            <div class="stat-label">核心技能领域</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">4</div>
-            <div class="stat-label">学习阶段</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">28</div>
-            <div class="stat-label">每日训练任务</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">∞</div>
-            <div class="stat-label">成长空间</div>
-        </div>
-    </section>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">12</div><div class="stat-label">功能页面</div></div>
+        <div class="stat"><div class="stat-num">80+</div><div class="stat-label">精选技能</div></div>
+        <div class="stat"><div class="stat-num">30+</div><div class="stat-label">实战案例</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">持续更新</div></div>
+    </div>
 
-    <!-- 技能图谱 -->
-    <section id="skills" class="content-section">
-        <div class="section-header">
-            <h2 class="section-title">技能图谱</h2>
-            <p class="section-subtitle">掌握 OpenClaw 核心技能，成为专业 AI 助手</p>
-        </div>
+    <div class="quick-links">
+        <a href="https://github.com/3682483/shrimp-commander" class="quick-btn" target="_blank">🐙 GitHub</a>
+        <a href="https://clawhub.com" class="quick-btn" target="_blank">🧩 ClawHub</a>
+        <a href="https://discord.com/invite/clawd" class="quick-btn" target="_blank">💬 Discord</a>
+        <a href="https://docs.openclaw.ai" class="quick-btn" target="_blank">📖 官方文档</a>
+    </div>
 
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">🔧</div>
-                <h3 class="skill-title">基础工具操作</h3>
-                <span class="skill-level">初级</span>
-                <p class="skill-description">
-                    掌握 OpenClaw 基础工具：文件读写、命令执行、进程管理。这是所有高级技能的基础。
-                </p>
+    <main class="content">
+        <!-- 📚 学习资源 -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">📚</span>
+                <h2 class="category-title">学习资源</h2>
+                <span class="category-count">4 个页面</span>
             </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">💬</div>
-                <h3 class="skill-title">消息与通讯</h3>
-                <span class="skill-level">初级</span>
-                <p class="skill-description">
-                    多渠道消息管理：飞书、Telegram、Discord。实现跨平台消息收发与自动化处理。
-                </p>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">🤖</div>
-                <h3 class="skill-title">Agent 编排</h3>
-                <span class="skill-level">中级</span>
-                <p class="skill-description">
-                    Sub-agent 管理、任务分配、多 Agent 协作。构建复杂的多助手协作系统。
-                </p>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">📝</div>
-                <h3 class="skill-title">文档处理</h3>
-                <span class="skill-level">中级</span>
-                <p class="skill-description">
-                    Feishu 文档、Markdown 编辑、文档协作。高效处理各种文档格式和协作场景。
-                </p>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">🗄️</div>
-                <h3 class="skill-title">数据管理</h3>
-                <span class="skill-level">中级</span>
-                <p class="skill-description">
-                    Memory 系统、数据持久化、知识库构建。让 AI 拥有长期记忆和知识储备。
-                </p>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">⏰</div>
-                <h3 class="skill-title">定时与调度</h3>
-                <span class="skill-level">中级</span>
-                <p class="skill-description">
-                    Cron 任务、定时触发、自动化工作流。实现无人值守的自动化任务执行。
-                </p>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">🔐</div>
-                <h3 class="skill-title">安全与权限</h3>
-                <span class="skill-level">高级</span>
-                <p class="skill-description">
-                    安全审计、权限控制、隐私保护。确保系统安全和数据隐私。
-                </p>
-            </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">🌐</div>
-                <h3 class="skill-title">网络与 API</h3>
-                <span class="skill-level">高级</span>
-                <p class="skill-description">
-                    Web 请求、API 集成、外部服务对接。连接外部世界，扩展能力边界。
-                </p>
+            <div class="card-grid">
+                <a href="tutorials.html" class="card">
+                    <div class="card-icon">📖</div>
+                    <div class="card-title">入门教程</div>
+                    <div class="card-desc">从零开始学 OpenClaw，5分钟快速开始到高级进阶</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-essential">必备</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="concepts.html" class="card">
+                    <div class="card-icon">🧠</div>
+                    <div class="card-title">核心概念</div>
+                    <div class="card-desc">深入理解 Agent、Skill、Tool、Memory 等核心概念</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-new">新</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="api.html" class="card">
+                    <div class="card-icon">📋</div>
+                    <div class="card-title">API 参考</div>
+                    <div class="card-desc">完整 API 文档，含参数说明和示例代码</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-new">新</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="faq.html" class="card">
+                    <div class="card-icon">❓</div>
+                    <div class="card-title">常见问题</div>
+                    <div class="card-desc">安装配置、使用问题、技能开发、部署相关问题</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-essential">必备</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
             </div>
         </div>
-    </section>
 
-    <!-- 学习路线 -->
-    <section id="roadmap" class="content-section">
-        <div class="section-header">
-            <h2 class="section-title">学习路线</h2>
-            <p class="section-subtitle">循序渐进，系统化成长</p>
-        </div>
-
-        <div class="roadmap">
-            <div class="roadmap-phase">
-                <h3 class="phase-title">第一阶段：基础训练</h3>
-                <span class="phase-duration">1-2 周</span>
-                <p class="phase-content">
-                    ✅ 理解 OpenClaw 架构和核心概念<br>
-                    ✅ 掌握基础工具：文件读写、命令执行<br>
-                    ✅ 学习消息收发机制<br>
-                    ✅ 完成第一个简单任务
-                </p>
+        <!-- 🧩 技能与资源 -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">🧩</span>
+                <h2 class="category-title">技能与资源</h2>
+                <span class="category-count">3 个页面</span>
             </div>
-
-            <div class="roadmap-phase">
-                <h3 class="phase-title">第二阶段：技能拓展</h3>
-                <span class="phase-duration">2-4 周</span>
-                <p class="phase-content">
-                    ✅ 掌握文档处理技能<br>
-                    ✅ 学习 Memory 系统<br>
-                    ✅ 理解 Agent 编排机制<br>
-                    ✅ 实现定时任务和自动化
-                </p>
-            </div>
-
-            <div class="roadmap-phase">
-                <h3 class="phase-title">第三阶段：进阶应用</h3>
-                <span class="phase-duration">1-2 月</span>
-                <p class="phase-content">
-                    ✅ 多 Agent 协作项目<br>
-                    ✅ 复杂工作流设计<br>
-                    ✅ 外部服务集成<br>
-                    ✅ 安全与权限管理
-                </p>
-            </div>
-
-            <div class="roadmap-phase">
-                <h3 class="phase-title">第四阶段：专家级</h3>
-                <span class="phase-duration">持续</span>
-                <p class="phase-content">
-                    ✅ 自定义 Skill 开发<br>
-                    ✅ 性能优化与调优<br>
-                    ✅ 最佳实践总结<br>
-                    ✅ 社区贡献与分享
-                </p>
+            <div class="card-grid">
+                <a href="skills.html" class="card">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">Skill 精品库</div>
+                    <div class="card-desc">80+ 精选技能包，12 大分类，官方推荐+社区热门</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-hot">🔥热门</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="links.html" class="card">
+                    <div class="card-icon">🔗</div>
+                    <div class="card-title">资源导航</div>
+                    <div class="card-desc">30+ OpenClaw 相关链接，官方资源+社区+学习资料</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-essential">必备</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="cases.html" class="card">
+                    <div class="card-icon">💡</div>
+                    <div class="card-title">最佳实践</div>
+                    <div class="card-desc">30+ 真实应用案例，6 大场景，含最佳实践建议</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-hot">🔥热门</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
             </div>
         </div>
-    </section>
 
-    <!-- 成长路径 -->
-    <section id="growth" class="content-section">
-        <div class="section-header">
-            <h2 class="section-title">虾的成长路径</h2>
-            <p class="section-subtitle">从幼虾到虾王的蜕变之旅</p>
-        </div>
-
-        <div class="growth-path">
-            <div class="growth-stage">
-                <div class="stage-icon">🐣</div>
-                <h3 class="stage-title">幼虾期</h3>
-                <span class="stage-level">新手</span>
-                <p class="stage-description">
-                    学习基础命令<br>
-                    完成简单任务<br>
-                    建立工作日志
-                </p>
+        <!-- 📰 动态与社区 -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">📰</span>
+                <h2 class="category-title">动态与社区</h2>
+                <span class="category-count">4 个页面</span>
             </div>
-
-            <div class="growth-stage">
-                <div class="stage-icon">🦐</div>
-                <h3 class="stage-title">成虾期</h3>
-                <span class="stage-level">进阶</span>
-                <p class="stage-description">
-                    独立完成复杂任务<br>
-                    多技能协作<br>
-                    项目管理能力
-                </p>
-            </div>
-
-            <div class="growth-stage">
-                <div class="stage-icon">🦞</div>
-                <h3 class="stage-title">龙虾期</h3>
-                <span class="stage-level">专家</span>
-                <p class="stage-description">
-                    指导其他虾<br>
-                    创建新技能<br>
-                    系统架构设计
-                </p>
-            </div>
-
-            <div class="growth-stage">
-                <div class="stage-icon">👑</div>
-                <h3 class="stage-title">虾王期</h3>
-                <span class="stage-level">大师</span>
-                <p class="stage-description">
-                    跨项目协调<br>
-                    战略规划能力<br>
-                    社区影响力
-                </p>
+            <div class="card-grid">
+                <a href="news.html" class="card">
+                    <div class="card-icon">📡</div>
+                    <div class="card-title">新闻动态</div>
+                    <div class="card-desc">版本更新、社区活动、安全公告、教程活动</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-new">新</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="changelog.html" class="card">
+                    <div class="card-icon">📜</div>
+                    <div class="card-title">更新日志</div>
+                    <div class="card-desc">版本历史与变更记录，追踪每个版本的更新</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-new">新</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="community.html" class="card">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">社区中心</div>
+                    <div class="card-desc">加入 Discord/GitHub/微信群，参与贡献者活动</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-essential">必备</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
+                <a href="contribute.html" class="card">
+                    <div class="card-icon">🤝</div>
+                    <div class="card-title">贡献指南</div>
+                    <div class="card-desc">如何提交代码、创建 Skill、参与开源贡献</div>
+                    <div class="card-meta">
+                        <span class="card-tag tag-new">新</span>
+                        <span class="card-arrow">→</span>
+                    </div>
+                </a>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-logo">🦞 虾指挥</div>
-            <p class="footer-text">
-                专注于 OpenClaw AI 助手成长的训练平台
-            </p>
-            <div class="footer-links">
-                <a href="https://github.com/3682483/shrimp-commander">GitHub</a>
-                <a href="https://docs.openclaw.ai">OpenClaw 文档</a>
-                <a href="https://clawhub.com">技能市场</a>
-            </div>
-            <p class="copyright">
-                © 2026 虾指挥 · Created by 陈一周 & 鑫鑫 🦞 · Powered by OpenClaw
-            </p>
+        <div class="footer-logo">🦞 虾指挥</div>
+        <div class="footer-links">
+            <a href="index.html">首页</a>
+            <a href="tutorials.html">教程</a>
+            <a href="skills.html">技能</a>
+            <a href="cases.html">案例</a>
+            <a href="community.html">社区</a>
+            <a href="https://github.com/3682483/shrimp-commander">GitHub</a>
         </div>
+        <p class="copyright">© 2026 虾指挥 · Created by 陈一周 & 鑫鑫 🦞 · Powered by OpenClaw</p>
     </footer>
-
-    <script>
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // 滚动动画
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.skill-card, .roadmap-phase, .growth-stage').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-    </script>
 </body>
 </html>
