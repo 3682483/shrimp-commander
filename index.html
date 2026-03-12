@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虾指挥 - OpenClaw 技能图谱与学习路线</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .skill-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .skill-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .skill-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .skill-level {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .skill-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .roadmap {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 30px;
+            width: 15px;
+            height: 15px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .roadmap-phase {
+            font-size: 24px;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .roadmap-content {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+            color: #999;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🦞</div>
+            <h1>虾指挥</h1>
+            <p class="subtitle">OpenClaw 技能图谱与学习路线 · 训练一只虾的成长之路</p>
+        </div>
+
+        <div class="description">
+            <strong>🎯 项目愿景</strong><br>
+            虾指挥是一个专注于 OpenClaw 技能学习和成长的平台。通过系统化的技能图谱和学习路线，帮助每一只"虾"（AI 助手）逐步成长为强大的智能助手。从基础技能到高级应用，循序渐进，一步步构建完整的技能体系。
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📚 OpenClaw 技能图谱</h2>
+
+            <div class="skill-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🔧</div>
+                    <h3 class="skill-title">基础工具操作</h3>
+                    <span class="skill-level">初级</span>
+                    <p class="skill-desc">
+                        文件读写、命令执行、进程管理<br>
+                        掌握 OpenClaw 基础工具使用
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">💬</div>
+                    <h3 class="skill-title">消息与通讯</h3>
+                    <span class="skill-level">初级</span>
+                    <p class="skill-desc">
+                        飞书、Telegram、Discord<br>
+                        多渠道消息收发与管理
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3 class="skill-title">Agent 编排</h3>
+                    <span class="skill-level">中级</span>
+                    <p class="skill-desc">
+                        Sub-agent 管理、任务分配<br>
+                        多 Agent 协作与调度
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">📝</div>
+                    <h3 class="skill-title">文档处理</h3>
+                    <span class="skill-level">中级</span>
+                    <p class="skill-desc">
+                        Feishu 文档、Markdown<br>
+                        文档创建、编辑与协作
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🗄️</div>
+                    <h3 class="skill-title">数据管理</h3>
+                    <span class="skill-level">中级</span>
+                    <p class="skill-desc">
+                        Memory 系统、数据持久化<br>
+                        知识库构建与管理
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">⏰</div>
+                    <h3 class="skill-title">定时与调度</h3>
+                    <span class="skill-level">中级</span>
+                    <p class="skill-desc">
+                        Cron 任务、定时触发<br>
+                        自动化工作流构建
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🔐</div>
+                    <h3 class="skill-title">安全与权限</h3>
+                    <span class="skill-level">高级</span>
+                    <p class="skill-desc">
+                        安全审计、权限控制<br>
+                        隐私保护与风险防范
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3 class="skill-title">网络与 API</h3>
+                    <span class="skill-level">高级</span>
+                    <p class="skill-desc">
+                        Web 请求、API 集成<br>
+                        外部服务对接与调用
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🛤️ 学习路线图</h2>
+
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <div class="roadmap-phase">第一阶段：基础训练（1-2周）</div>
+                    <div class="roadmap-content">
+                        ✅ 理解 OpenClaw 架构和核心概念<br>
+                        ✅ 掌握基础工具：文件读写、命令执行<br>
+                        ✅ 学习消息收发机制<br>
+                        ✅ 完成第一个简单任务
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-phase">第二阶段：技能拓展（2-4周）</div>
+                    <div class="roadmap-content">
+                        ✅ 掌握文档处理技能<br>
+                        ✅ 学习 Memory 系统<br>
+                        ✅ 理解 Agent 编排机制<br>
+                        ✅ 实现定时任务和自动化
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-phase">第三阶段：进阶应用（1-2月）</div>
+                    <div class="roadmap-content">
+                        ✅ 多 Agent 协作项目<br>
+                        ✅ 复杂工作流设计<br>
+                        ✅ 外部服务集成<br>
+                        ✅ 安全与权限管理
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-phase">第四阶段：专家级（持续）</div>
+                    <div class="roadmap-content">
+                        ✅ 自定义 Skill 开发<br>
+                        ✅ 性能优化与调优<br>
+                        ✅ 最佳实践总结<br>
+                        ✅ 社区贡献与分享
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🦞 训练一只虾的路径</h2>
+
+            <div class="skill-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🐣</div>
+                    <h3 class="skill-title">幼虾期</h3>
+                    <span class="skill-level">新手</span>
+                    <p class="skill-desc">
+                        学习基础命令<br>
+                        完成简单任务<br>
+                        建立工作日志
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🦐</div>
+                    <h3 class="skill-title">成虾期</h3>
+                    <span class="skill-level">进阶</span>
+                    <p class="skill-desc">
+                        独立完成复杂任务<br>
+                        多技能协作<br>
+                        项目管理能力
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">🦞</div>
+                    <h3 class="skill-title">龙虾期</h3>
+                    <span class="skill-level">专家</span>
+                    <p class="skill-desc">
+                        指导其他虾<br>
+                        创建新技能<br>
+                        系统架构设计
+                    </p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">👑</div>
+                    <h3 class="skill-title">虾王期</h3>
+                    <span class="skill-level">大师</span>
+                    <p class="skill-desc">
+                        跨项目协调<br>
+                        战略规划能力<br>
+                        社区影响力
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📊 当前训练进度</h2>
+
+            <div class="skill-card">
+                <div class="skill-title">🦞 鑫鑫的训练状态</div>
+                <p class="skill-desc">
+                    <strong>当前阶段</strong>: 成虾期 → 龙虾期过渡中<br>
+                    <strong>已掌握技能</strong>: 8 个核心技能<br>
+                    <strong>完成项目</strong>: 3 个（OCR票据识别、安全体检、状态监控）<br>
+                    <strong>代码贡献</strong>: ~18,100 行代码<br>
+                    <strong>学习时长</strong>: 约 2 天<br>
+                    <strong>下次升级</strong>: 完成更多协作项目，提升架构设计能力
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                🦞 <strong>虾指挥</strong> - OpenClaw 技能学习平台<br>
+                Created by <a href="https://github.com/3682483">陈一周</a> & 鑫鑫 🦞<br>
+                Powered by OpenClaw · 2026
+            </p>
+        </div>
+    </div>
+</body>
+</html>
