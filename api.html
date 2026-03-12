@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 参考 | 虾指挥</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #0a2e38;
+            --accent: #ff6b6b;
+            --accent-green: #00ff88;
+            --accent-purple: #a855f7;
+            --dark: #020810;
+            --light: #e8f4f8;
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', sans-serif; background: var(--dark); color: var(--light); }
+        .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #0a2e38 0%, #020810 100%); z-index: -1; }
+        nav { position: fixed; top: 0; width: 100%; background: rgba(2,8,16,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,240,255,0.2); z-index: 1000; padding: 1rem 2rem; }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon { font-size: 2.5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { font-family: 'Rajdhani', sans-serif; font-weight: 600; color: var(--light); text-decoration: none; }
+        .nav-links a:hover { color: var(--primary); }
+        .layout { display: flex; max-width: 1400px; margin: 0 auto; padding-top: 80px; }
+        .sidebar { width: 250px; padding: 2rem 1rem; position: fixed; top: 80px; height: calc(100vh - 80px); overflow-y: auto; border-right: 1px solid rgba(0,240,255,0.1); }
+        .sidebar-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--primary); margin-bottom: 1rem; }
+        .sidebar-list { list-style: none; }
+        .sidebar-list a { display: block; padding: 0.5rem 1rem; color: rgba(232,244,248,0.7); text-decoration: none; border-radius: 5px; font-size: 0.9rem; transition: all 0.2s; }
+        .sidebar-list a:hover, .sidebar-list a.active { background: rgba(0,240,255,0.1); color: var(--primary); }
+        .main { flex: 1; margin-left: 250px; padding: 2rem; }
+        .hero { padding: 2rem 0 3rem; border-bottom: 1px solid rgba(0,240,255,0.1); margin-bottom: 2rem; }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
+        .hero p { color: rgba(232,244,248,0.7); }
+        .section { margin-bottom: 3rem; }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,240,255,0.2); }
+        .api-item { background: rgba(10,46,56,0.3); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .api-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .api-method { padding: 0.3rem 0.8rem; border-radius: 5px; font-size: 0.8rem; font-weight: 700; }
+        .method-get { background: rgba(0,255,136,0.2); color: var(--accent-green); }
+        .method-post { background: rgba(0,240,255,0.2); color: var(--primary); }
+        .method-put { background: rgba(255,187,36,0.2); color: #fbbf24; }
+        .method-delete { background: rgba(255,107,107,0.2); color: var(--accent); }
+        .api-name { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--light); }
+        .api-desc { color: rgba(232,244,248,0.8); margin-bottom: 1rem; line-height: 1.6; }
+        .api-code { background: rgba(0,0,0,0.4); border-radius: 10px; padding: 1rem; overflow-x: auto; }
+        .api-code code { font-family: 'Monaco', monospace; font-size: 0.85rem; color: var(--accent-green); }
+        .api-params { margin-top: 1rem; }
+        .api-params h4 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .param-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .param-table th, .param-table td { padding: 0.5rem; text-align: left; border-bottom: 1px solid rgba(0,240,255,0.1); }
+        .param-table th { color: var(--primary); font-weight: 600; }
+        .param-table td { color: rgba(232,244,248,0.8); }
+        .param-type { color: var(--accent-purple); font-family: Monaco, monospace; font-size: 0.8rem; }
+        .param-required { color: var(--accent); font-size: 0.75rem; }
+        footer { background: rgba(2,8,16,0.9); border-top: 1px solid rgba(0,240,255,0.2); padding: 2rem; text-align: center; margin-top: 4rem; margin-left: 250px; }
+        .footer-logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .copyright { color: rgba(232,244,248,0.5); font-size: 0.85rem; margin-top: 0.5rem; }
+        @media (max-width: 1024px) { .sidebar { display: none; } .main { margin-left: 0; } footer { margin-left: 0; } }
+        @media (max-width: 768px) { .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo"><span class="logo-icon">🦞</span><span>虾指挥</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="tutorials.html">入门教程</a></li>
+                <li><a href="concepts.html">核心概念</a></li>
+                <li><a href="api.html">API参考</a></li>
+                <li><a href="skills.html">Skill精品库</a></li>
+                <li><a href="cases.html">最佳实践</a></li>
+                <li><a href="faq.html">常见问题</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <h3 class="sidebar-title">📖 目录</h3>
+            <ul class="sidebar-list">
+                <li><a href="#overview" class="active">概述</a></li>
+                <li><a href="#agent">Agent API</a></li>
+                <li><a href="#skill">Skill API</a></li>
+                <li><a href="#tool">Tool API</a></li>
+                <li><a href="#memory">Memory API</a></li>
+                <li><a href="#channel">Channel API</a></li>
+                <li><a href="#config">Config API</a></li>
+            </ul>
+        </aside>
+
+        <main class="main">
+            <div class="hero">
+                <h1>API 参考</h1>
+                <p>OpenClaw 完整 API 文档，包含所有工具、接口和参数说明</p>
+            </div>
+
+            <section id="overview" class="section">
+                <h2 class="section-title">📚 概述</h2>
+                <div class="api-item">
+                    <p class="api-desc">OpenClaw 提供 RESTful API 和 SDK 两种调用方式。所有 API 需要 Bearer Token 认证。</p>
+                    <div class="api-code">
+                        <code>
+Base URL: http://localhost:3000/api/v1<br>
+认证方式: Authorization: Bearer &lt;token&gt;<br>
+响应格式: JSON
+                        </code>
+                    </div>
+                </div>
+            </section>
+
+            <section id="agent" class="section">
+                <h2 class="section-title">🤖 Agent API</h2>
+                
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/agent/chat</span>
+                    </div>
+                    <p class="api-desc">发送消息给 Agent，获取响应。支持流式和非流式两种模式。</p>
+                    <div class="api-code">
+                        <code>
+{<br>
+  "message": "帮我总结今天的日程",<br>
+  "stream": false,<br>
+  "context": { "userId": "user123" }<br>
+}
+                        </code>
+                    </div>
+                    <div class="api-params">
+                        <h4>参数</h4>
+                        <table class="param-table">
+                            <tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th></tr>
+                            <tr><td>message</td><td><span class="param-type">string</span></td><td><span class="param-required">必填</span></td><td>用户消息内容</td></tr>
+                            <tr><td>stream</td><td><span class="param-type">boolean</span></td><td>可选</td><td>是否流式响应，默认 false</td></tr>
+                            <tr><td>context</td><td><span class="param-type">object</span></td><td>可选</td><td>上下文信息</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-get">GET</span>
+                        <span class="api-name">/agent/status</span>
+                    </div>
+                    <p class="api-desc">获取 Agent 当前状态，包括活跃任务、资源占用等。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/agent/reset</span>
+                    </div>
+                    <p class="api-desc">重置 Agent 状态，清空当前对话上下文。</p>
+                </div>
+            </section>
+
+            <section id="skill" class="section">
+                <h2 class="section-title">🧩 Skill API</h2>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-get">GET</span>
+                        <span class="api-name">/skills</span>
+                    </div>
+                    <p class="api-desc">列出已安装的所有 Skill。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/skills/install</span>
+                    </div>
+                    <p class="api-desc">安装新的 Skill。</p>
+                    <div class="api-code">
+                        <code>
+{<br>
+  "source": "github:user/skill-repo",<br>
+  "version": "latest"<br>
+}
+                        </code>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-delete">DELETE</span>
+                        <span class="api-name">/skills/{name}</span>
+                    </div>
+                    <p class="api-desc">卸载指定的 Skill。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-get">GET</span>
+                        <span class="api-name">/skills/{name}/info</span>
+                    </div>
+                    <p class="api-desc">获取指定 Skill 的详细信息。</p>
+                </div>
+            </section>
+
+            <section id="tool" class="section">
+                <h2 class="section-title">🔧 Tool API</h2>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-get">GET</span>
+                        <span class="api-name">/tools</span>
+                    </div>
+                    <p class="api-desc">列出所有可用的 Tool 及其参数定义。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/tools/{name}/execute</span>
+                    </div>
+                    <p class="api-desc">直接执行指定的 Tool。</p>
+                    <div class="api-code">
+                        <code>
+{<br>
+  "params": {<br>
+    "path": "/home/user/file.txt",<br>
+    "content": "Hello World"<br>
+  }<br>
+}
+                        </code>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/tools/whitelist</span>
+                    </div>
+                    <p class="api-desc">设置 Tool 白名单，限制 Agent 可用的工具。</p>
+                </div>
+            </section>
+
+            <section id="memory" class="section">
+                <h2 class="section-title">🧠 Memory API</h2>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-get">GET</span>
+                        <span class="api-name">/memory/search</span>
+                    </div>
+                    <p class="api-desc">语义搜索记忆内容。</p>
+                    <div class="api-code">
+                        <code>
+GET /memory/search?query=项目进度&limit=10
+                        </code>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/memory/add</span>
+                    </div>
+                    <p class="api-desc">添加新的记忆条目。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-delete">DELETE</span>
+                        <span class="api-name">/memory/{id}</span>
+                    </div>
+                    <p class="api-desc">删除指定的记忆条目。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/memory/compact</span>
+                    </div>
+                    <p class="api-desc">压缩和整理记忆，优化检索效率。</p>
+                </div>
+            </section>
+
+            <section id="channel" class="section">
+                <h2 class="section-title">💬 Channel API</h2>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-get">GET</span>
+                        <span class="api-name">/channels</span>
+                    </div>
+                    <p class="api-desc">列出所有已配置的消息通道。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-post">POST</span>
+                        <span class="api-name">/channels/{type}/send</span>
+                    </div>
+                    <p class="api-desc">通过指定通道发送消息。</p>
+                    <div class="api-code">
+                        <code>
+{<br>
+  "to": "user_123",<br>
+  "message": "任务已完成！"<br>
+}
+                        </code>
+                    </div>
+                </div>
+            </section>
+
+            <section id="config" class="section">
+                <h2 class="section-title">⚙️ Config API</h2>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-get">GET</span>
+                        <span class="api-name">/config</span>
+                    </div>
+                    <p class="api-desc">获取当前配置信息。</p>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-header">
+                        <span class="api-method method-put">PUT</span>
+                        <span class="api-name">/config</span>
+                    </div>
+                    <p class="api-desc">更新配置。支持热更新，无需重启。</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-logo">🦞 虾指挥</div>
+        <p class="copyright">© 2026 虾指挥 · Created by 陈一周 & 鑫鑫 🦞</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.sidebar-list a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('.sidebar-list a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

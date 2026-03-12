@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>核心概念 | 虾指挥</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #0a2e38;
+            --accent: #ff6b6b;
+            --accent-green: #00ff88;
+            --accent-purple: #a855f7;
+            --accent-yellow: #fbbf24;
+            --dark: #020810;
+            --light: #e8f4f8;
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', sans-serif; background: var(--dark); color: var(--light); }
+        .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #0a2e38 0%, #020810 100%); z-index: -1; }
+        nav { position: fixed; top: 0; width: 100%; background: rgba(2,8,16,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,240,255,0.2); z-index: 1000; padding: 1rem 2rem; }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon { font-size: 2.5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { font-family: 'Rajdhani', sans-serif; font-weight: 600; color: var(--light); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .hero { min-height: 35vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 2rem; }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero .subtitle { color: var(--primary); font-size: 1.3rem; letter-spacing: 2px; }
+        .content { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .concept-card { background: rgba(10,46,56,0.3); border: 1px solid rgba(0,240,255,0.2); border-radius: 20px; padding: 2rem; transition: all 0.3s; }
+        .concept-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,240,255,0.2); }
+        .concept-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .concept-title { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .concept-en { font-size: 0.85rem; color: rgba(232,244,248,0.5); margin-bottom: 1rem; }
+        .concept-desc { color: rgba(232,244,248,0.8); line-height: 1.7; margin-bottom: 1rem; }
+        .concept-features { list-style: none; }
+        .concept-features li { padding: 0.4rem 0; padding-left: 1.5rem; position: relative; color: rgba(232,244,248,0.7); font-size: 0.9rem; }
+        .concept-features li::before { content: '→'; position: absolute; left: 0; color: var(--accent-green); }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--primary); margin: 3rem 0 2rem; display: flex; align-items: center; gap: 0.5rem; }
+        .arch-diagram { background: rgba(10,46,56,0.3); border: 1px solid rgba(0,240,255,0.2); border-radius: 20px; padding: 2rem; text-align: center; margin-bottom: 3rem; }
+        .arch-flow { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 2rem 0; }
+        .arch-box { padding: 1rem 1.5rem; background: rgba(0,240,255,0.1); border: 1px solid var(--primary); border-radius: 10px; font-weight: 600; }
+        .arch-arrow { font-size: 1.5rem; color: var(--primary); }
+        footer { background: rgba(2,8,16,0.9); border-top: 1px solid rgba(0,240,255,0.2); padding: 3rem 2rem 2rem; text-align: center; margin-top: 4rem; }
+        .footer-logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; }
+        .footer-links a { color: var(--primary); text-decoration: none; }
+        .copyright { color: rgba(232,244,248,0.5); font-size: 0.9rem; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .nav-links { display: none; } .concept-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo"><span class="logo-icon">🦞</span><span>虾指挥</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="tutorials.html">入门教程</a></li>
+                <li><a href="concepts.html">核心概念</a></li>
+                <li><a href="api.html">API参考</a></li>
+                <li><a href="skills.html">Skill精品库</a></li>
+                <li><a href="cases.html">最佳实践</a></li>
+                <li><a href="faq.html">常见问题</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div>
+            <h1>核心概念</h1>
+            <p class="subtitle">CORE CONCEPTS</p>
+        </div>
+    </section>
+
+    <main class="content">
+        <h2 class="section-title">🧱 基础概念</h2>
+        <div class="concept-grid">
+            <div class="concept-card">
+                <div class="concept-icon">🤖</div>
+                <h3 class="concept-title">Agent</h3>
+                <p class="concept-en">智能代理</p>
+                <p class="concept-desc">OpenClaw 的核心实体，负责理解用户意图、规划任务、调用工具、生成响应。每个 Agent 都有独立的记忆、技能和配置。</p>
+                <ul class="concept-features">
+                    <li>基于 LLM 的智能决策</li>
+                    <li>多轮对话上下文管理</li>
+                    <li>任务分解和执行</li>
+                    <li>可配置的个性设定</li>
+                </ul>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🧩</div>
+                <h3 class="concept-title">Skill</h3>
+                <p class="concept-en">技能包</p>
+                <p class="concept-desc">扩展 Agent 能力的模块化组件。每个 Skill 定义了特定的能力边界、触发条件和执行逻辑，可独立安装和卸载。</p>
+                <ul class="concept-features">
+                    <li>模块化、可插拔设计</li>
+                    <li>SKILL.md 定义技能规范</li>
+                    <li>支持依赖和版本管理</li>
+                    <li>ClawHub 统一分发</li>
+                </ul>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🔧</div>
+                <h3 class="concept-title">Tool</h3>
+                <p class="concept-en">工具</p>
+                <p class="concept-desc">Agent 与外部世界交互的接口。Tool 提供具体的操作能力，如读写文件、发送消息、调用 API 等。</p>
+                <ul class="concept-features">
+                    <li>统一的工具调用协议</li>
+                    <li>参数验证和类型检查</li>
+                    <li>权限控制和安全审计</li>
+                    <li>内置 + 自定义扩展</li>
+                </ul>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🧠</div>
+                <h3 class="concept-title">Memory</h3>
+                <p class="concept-en">记忆系统</p>
+                <p class="concept-desc">Agent 的长期和短期记忆存储。支持语义检索、上下文召回、记忆压缩，让 Agent 拥有持续记忆能力。</p>
+                <ul class="concept-features">
+                    <li>MEMORY.md 长期记忆</li>
+                    <li>memory/ 每日笔记</li>
+                    <li>向量语义检索</li>
+                    <li>自动记忆管理</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">⚡ 进阶概念</h2>
+        <div class="concept-grid">
+            <div class="concept-card">
+                <div class="concept-icon">💬</div>
+                <h3 class="concept-title">Channel</h3>
+                <p class="concept-en">消息通道</p>
+                <p class="concept-desc">Agent 与用户交互的渠道。支持多种消息平台，如 Discord、Telegram、飞书、Web 等，统一消息格式和处理流程。</p>
+                <ul class="concept-features">
+                    <li>多平台统一适配</li>
+                    <li>消息格式标准化</li>
+                    <li>双向通信支持</li>
+                    <li>事件驱动架构</li>
+                </ul>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🔄</div>
+                <h3 class="concept-title">Workflow</h3>
+                <p class="concept-en">工作流</p>
+                <p class="concept-desc">多步骤任务的编排系统。支持条件分支、循环、并行执行，实现复杂的自动化场景。</p>
+                <ul class="concept-features">
+                    <li>可视化流程编排</li>
+                    <li>条件判断和分支</li>
+                    <li>错误处理和重试</li>
+                    <li>定时触发和事件驱动</li>
+                </ul>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🤝</div>
+                <h3 class="concept-title">Sub-Agent</h3>
+                <p class="concept-en">子代理</p>
+                <p class="concept-desc">主 Agent 可以动态创建子 Agent 处理子任务。支持并行执行、结果汇总、独立上下文。</p>
+                <ul class="concept-features">
+                    <li>动态创建和销毁</li>
+                    <li>任务分发和汇总</li>
+                    <li>独立记忆空间</li>
+                    <li>资源隔离管理</li>
+                </ul>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🔐</div>
+                <h3 class="concept-title">Security</h3>
+                <p class="concept-en">安全模型</p>
+                <p class="concept-desc">多层次安全控制体系。包括 Tool 权限、文件隔离、网络安全、凭证管理等，保护系统和数据安全。</p>
+                <ul class="concept-features">
+                    <li>Tool 白名单机制</li>
+                    <li>文件系统沙箱</li>
+                    <li>凭证加密存储</li>
+                    <li>Skill 安全审计</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">🏗️ 架构图</h2>
+        <div class="arch-diagram">
+            <h3 style="font-family: 'Orbitron', sans-serif; color: var(--primary); margin-bottom: 1rem;">OpenClaw 工作流程</h3>
+            <div class="arch-flow">
+                <div class="arch-box">👤 用户消息</div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-box">💬 Channel</div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-box">🤖 Agent</div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-box">🧠 Memory</div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-box">🧩 Skill</div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-box">🔧 Tool</div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-box">📤 响应</div>
+            </div>
+            <p style="color: rgba(232,244,248,0.7);">用户消息通过 Channel 进入 → Agent 结合 Memory 理解上下文 → 匹配 Skill 调用 Tool 执行 → 返回结果</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">🦞 虾指挥</div>
+        <div class="footer-links">
+            <a href="index.html">首页</a>
+            <a href="tutorials.html">入门教程</a>
+            <a href="api.html">API参考</a>
+            <a href="https://github.com/3682483/shrimp-commander">GitHub</a>
+        </div>
+        <p class="copyright">© 2026 虾指挥 · Created by 陈一周 & 鑫鑫 🦞</p>
+    </footer>
+</body>
+</html>
